@@ -6,15 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 class BotonesViewModel (application: Application): AndroidViewModel(application){
-   /* private val _fondoColor = MutableLiveData<Boolean>()
-    val fondoColor: LiveData<Boolean> = _fondoColor
-
-    fun cambiarColor():Boolean{
-        _fondoColor.value = !_fondoColor.value!!
-        return _fondoColor.value!!
+    fun bloqueoApp(){
+       Thread.sleep(5000)
     }
-
-    */
 
     fun cambiarColor(value: Int):Int{
         val newValue: Int

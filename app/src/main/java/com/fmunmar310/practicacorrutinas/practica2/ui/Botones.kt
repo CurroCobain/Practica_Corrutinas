@@ -32,7 +32,7 @@ fun Botones(botonesViewModel: BotonesViewModel){
         }
         Text(text = "Respuesta de la Api ($vecesPulsado)")
         Button(
-            onClick = {Thread.sleep(5000)
+            onClick = {botonesViewModel.bloqueoApp()
                       vecesPulsado++},
             modifier = Modifier.wrapContentSize(),
             colors = ButtonDefaults.buttonColors(
