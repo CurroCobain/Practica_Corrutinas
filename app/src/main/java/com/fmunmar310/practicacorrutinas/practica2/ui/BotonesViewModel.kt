@@ -18,19 +18,29 @@ class BotonesViewModel (application: Application): AndroidViewModel(application)
     private var _callCount = 0
     private val _resultState = MutableLiveData<String>()
     val resultState: LiveData<String> = _resultState
-    fun bloqueoApp(){
-       Thread.sleep(5000)
-    }
+    private val _isLoading = MutableLiveData<Boolean>(false)
+    val isLoading: LiveData<Boolean> = _isLoading
     fun fetchData() {
         _callCount= _callCount.plus(1)
-        //Nos permite crear una corrutina desde un ViewModel
+//Nos permite crear una corrutina desde un ViewModel
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                delay(5000)
-                "Respuesta de la API ($_callCount)"
+            try {
+                _isLoading.value = true
+                llamarApi()
+            } catch (e: Exception) {
+                println("Error ${e.message}")
+            } finally {
+                _isLoading.value = false
             }
-            _resultState.value = result
         }
+    }
+    //Solo funcionan dentro de una corrutina u otra función suspendida
+    private suspend fun llamarApi() {
+        val result = withContext(Dispatchers.IO) {
+            delay(5000)
+            "Respuesta de la API ($_callCount)"
+        }
+        _resultState.value = result
     }
 
     fun cambiarColor() {

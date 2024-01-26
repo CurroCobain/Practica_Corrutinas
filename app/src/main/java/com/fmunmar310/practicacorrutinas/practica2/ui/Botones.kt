@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 fun Botones(botonesViewModel: BotonesViewModel){
     val colorFondo: Int by botonesViewModel.colour.observeAsState(initial = 1)
     val result: String by botonesViewModel.resultState.observeAsState(initial = "Respuesta de la API ()")
+    val isLoading: Boolean by botonesViewModel.isLoading.observeAsState(initial = false)
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center){
         Button(
@@ -28,7 +30,8 @@ fun Botones(botonesViewModel: BotonesViewModel){
         ){
             Text(text = "Cambiar Color")
         }
-        Text(text = result)
+        if(isLoading) CircularProgressIndicator()
+        else Text(text = result)
         Button(
             onClick = {botonesViewModel.fetchData() },
             modifier = Modifier.wrapContentSize(),
